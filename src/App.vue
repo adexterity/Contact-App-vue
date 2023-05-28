@@ -1,9 +1,25 @@
 <script setup>
-import Home from "./components/Home.vue";
-</script>
+import { ref } from "vue";
+import Home from "./components/home.vue";
+import Form from "./components/Form.vue";
 
+let clicked = ref(false);
+
+const open = () => {
+  clicked.value = true;
+};
+const close = () => {
+  clicked.value = false;
+};
+</script>
 <template>
-  <Home />
+  <div>
+    <div v-if="clicked">
+      <Form @close="close" />
+    </div>
+
+    <Home @open="open" />
+  </div>
 </template>
 
 <style scoped>
