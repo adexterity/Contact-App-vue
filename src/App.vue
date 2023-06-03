@@ -1,24 +1,34 @@
 <script setup>
-import { ref } from "vue";
+import { reactive,ref } from "vue";
 import Home from "./components/home.vue";
 import Form from "./components/Form.vue";
 
-let clicked = ref(false);
+const state= reactive({
 
-const open = () => {
-  clicked.value = true;
+  contacts : [],
+  // clicked : false,
+})
+let clicked = ref(false)
+
+const toggleModal = () => {
+  clicked.value= !clicked.value;
 };
-const close = () => {
-  clicked.value = false;
+
+const addContact = (data) => {
+  state.contacts= [...state.contacts,data];
+  clicked.value = !clicked.value;
 };
 </script>
 <template>
   <div>
     <div v-if="clicked">
-      <Form @close="close" />
+      <Form @close="toggleModal" v-on:add-contact="addContact" />
     </div>
 
-    <Home @open="open" />
+    <Home @open="toggleModal" :contacts="contacts" />
+    <div>
+      {{ contacts }}
+    </div>
   </div>
 </template>
 

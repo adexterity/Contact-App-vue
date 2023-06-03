@@ -1,4 +1,28 @@
+<script >
+   export default{
+
+     props:{
+       contacts: Object
+      },
+setup(props, {emit}){
+
+  function openContactField() {
+     emit("open");
+  };
+  
+
+  return{
+    openContactField
+  }
+  }      
+}
+             
+          
+        
+        </script>
+
 <template>
+
   <!-- content container -->
   <div class="container">
     <header>
@@ -15,6 +39,7 @@
       />
       <input
         type="button"
+        
         value="search"
         class="border border-gray-800 rounded px-4 py-1 cursor-pointer"
       />
@@ -42,17 +67,8 @@
           </div>
         </div>
       </div>
+      
     </main>
   </div>
 </template>
-<script>
-export default {
-  name: "Home",
-  methods: {
-    openContactField() {
-      this.$emit("open");
-    },
-  },
-};
-</script>
 <style scoped></style>

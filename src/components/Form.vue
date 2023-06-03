@@ -1,38 +1,51 @@
-<script>
-export default {
-  name: "Form",
-  data() {
-    return {
-      inputName: "",
-      inputEmail: "",
-      inputNum: "",
-      inputComp: "",
-      inputTitle: "",
-      inputGroup: null,
-      todos: [],
-    };
-  },
-  methods: {
-    closeModal() {
-      this.$emit("close");
-    },
-    showName() {
-      console.log(this.inputName);
-    },
-    todo() {
-      this.todos.push({
-        name: this.inputName,
-        email: this.inputEmail,
-        number: this.inputNum,
-        company: this.inputComp,
-        title: this.inputTitle,
-        group: this.inputGroup,
-      });
+<script >
+import {reactive} from "vue";
+export default{
+name: "Form",
 
-      this.closeModal();
-    },
-  },
-};
+props: {
+  state: Object
+},
+setup(props, {emit}){
+  const contactData =reactive({
+
+    name: "",
+    email: "",
+    number: "",
+    company: "",
+    title: "",
+    group: null,
+    todos: [],
+    contacts: [],
+  });
+  function formHandler(){
+    emit("add-contact", {
+      name: contactData.name,
+      email: contactData.email,
+      number: contactData.number,
+      company: contactData.company,
+      title: contactData.title,
+      group: contactData.group,
+      todos: contactData.todos,
+      contacts: contactData.contacts,
+    });
+    contactData.name="";
+    contactData.email= "";
+    contactData.number="";
+    contactData.company="";
+    contactData.group="";
+    
+    
+  };
+  function closeModal(){
+    emit("close")
+  }
+  return{
+    contactData, formHandler, closeModal
+  }
+}
+
+}
 </script>
 
 <template>
@@ -45,43 +58,43 @@ export default {
         Create Contact
       </h2>
       <p class="pt-2 pb-10">please fill in the form to create a contact</p>
-      <form @submit.prevent="todo">
+      <form @submit.prevent="formHandler">
         <input
           type="text"
           placeholder="Name"
           required
           class="field"
-          v-model="inputName"
+          v-model="contactData.name"
         />
         <input type="text" placeholder="Photo url" class="field" />
         <input
-          type="number"
+          type="tel"
           placeholder="Mobile"
           required
           class="field"
-          v-model="inputNum"
+          v-model="contactData.number"
         />
         <input
           type="text"
           placeholder="Email"
           required
           class="field"
-          v-model="inputEmail"
+          v-model="contactData.email"
         />
         <input
           type="text"
           placeholder="Company"
           class="field"
-          v-model="inputComp"
+          v-model="contactData.company"
         />
         <input
           type="text"
           placeholder="Title"
           class="field"
-          v-model="inputTitle"
+          v-model="contactData.title"
         />
 
-        <select class="field w-48" v-model="inputGroup">
+        <select class="field w-48" v-model="contactData.group">
           <option value="" selected disabled>Select group</option>
           <option value="partner">partner</option>
           <option value="friend">friend</option>
@@ -98,7 +111,6 @@ export default {
           />
         </div>
       </form>
-      <p>name: {{ inputName }}</p>
     </div>
   </div>
 </template>
