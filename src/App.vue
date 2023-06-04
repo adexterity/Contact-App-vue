@@ -3,6 +3,7 @@ import { reactive,ref } from "vue";
 import Home from "./components/home.vue";
 import Form from "./components/Form.vue";
 import ContactList from "./components/ContactList.vue";
+import ContactDetails from "./components/ContactDetails.vue";
 
 const state= reactive({
 
@@ -32,6 +33,9 @@ const addContact = (data) => {
 
     <div>
       <ContactList :contacts="state.contacts" />
+    </div>
+    <div>
+      <ContactDetails />
     </div>
   </div>
 </template>
