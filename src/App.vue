@@ -2,6 +2,7 @@
 import { reactive,ref } from "vue";
 import Home from "./components/home.vue";
 import Form from "./components/Form.vue";
+import ContactList from "./components/ContactList.vue";
 
 const state= reactive({
 
@@ -25,16 +26,19 @@ const addContact = (data) => {
       <Form @close="toggleModal" v-on:add-contact="addContact" />
     </div>
 
-    <Home @open="toggleModal" :contacts="contacts" />
     <div>
-      {{ contacts }}
+      <Home @open="toggleModal" />
+    </div>
+
+    <div>
+      <ContactList :contacts="state.contacts" />
     </div>
   </div>
 </template>
 
 <style scoped>
 * {
-  margin: 0;
+  
   padding: 0;
   box-sizing: border-box;
 }
