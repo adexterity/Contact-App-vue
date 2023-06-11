@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -19,6 +20,7 @@
 body {
   background-color: #e2dede;
   height: 100vh;
+  
 }
 a {
   font-weight: 500;
