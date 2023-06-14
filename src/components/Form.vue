@@ -19,6 +19,7 @@ export default {
       group: null,
       todos: [],
       contacts: [],
+      id: null,
     });
     /* function formHandler() {
 
@@ -51,7 +52,8 @@ export default {
         title: contactData.title,
         group: contactData.group,
         todos: contactData.todos,
-        contacts: contactData.contacts
+        contacts: contactData.contacts,
+        id: Math.floor(Math.random() * 1000),
       })
     }
 

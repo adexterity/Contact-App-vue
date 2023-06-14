@@ -1,18 +1,12 @@
 <script>
-import { ref } from "vue";
+
 import ContactItem from "./ContactItem.vue";
 export default {
-    props: ["contacts", "favs"],
+    props: ["contacts", "favs", "searchContacts"],
     components: {
         ContactItem
-    },
-    setup(props) {
-        const allContacts = ref(props.contacts)
-        const favContacts = ref(props.favs)
-        return {
-            allContacts, favContacts
-        }
     }
+
 }
 </script>
 <template>
@@ -21,7 +15,15 @@ export default {
         <!-- all contacts -->
         <div class="contacts grid md:grid-cols-12 gap-4">
             <div class="relative card bg-slate-100 flex items-center w-auto md:col-span-6 rounded-md"
-                v-for="contact in allContacts" :key="contact.id">
+                v-for="contact in contacts" :key="contact.id">
+                <ContactItem :contact="contact" />
+            </div>
+        </div>
+
+        <!-- search contacts -->
+        <div class="contacts grid md:grid-cols-12 gap-4">
+            <div class="relative card bg-slate-100 flex items-center w-auto md:col-span-6 rounded-md"
+                v-for="contact in searchContacts" :key="contact.id">
                 <ContactItem :contact="contact" />
             </div>
         </div>
@@ -29,7 +31,7 @@ export default {
         <!-- favorite contacts -->
         <div class="contacts grid md:grid-cols-12 grid-4">
             <div class="relative card bg-slate-100 flex items-center w-auto md:col-span-6 rounded-md"
-                v-for="contact in favContacts" :key="contact.id">
+                v-for="contact in favs" :key="contact.id">
                 <ContactItem :contact="contact" />
             </div>
         </div>

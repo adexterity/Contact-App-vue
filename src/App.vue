@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, watch } from "vue";
 import Home from "./components/home.vue";
 import Form from "./components/Form.vue";
 import ContactList from "./components/ContactList.vue";
@@ -8,12 +8,27 @@ import { useContactStore } from "./stores/contactStore";
 
 
 const contactStore = useContactStore();
+const searching = ref(contactStore.searching);
+
+//fetch contacts
+contactStore.getContacts();
 const state = reactive({
 
-  contacts: [],
   clicked: false,
 })
 let showContact = ref("all")
+
+/* function searchfilter() {
+  // console.log(contactStore.searchFilter)
+  console.log(searching.value)
+} 
+
+searchfilter()
+*/
+
+watch(searching, (newvalue) => {
+  console.log(newvalue.value)
+})
 
 
 
@@ -40,16 +55,26 @@ const addContact = () => {
       <button class="btn bg-green-500 px-3 " @click="showContact = 'all'">All contacts</button>
       <button class="btn bg-green-500 py-3" @click="showContact = 'fav'">Favorite contacts</button>
     </div>
+    <!-- loading -->
+    <div class="loading" v-if="contactStore.loading">loading contacts...</div>
     <!-- all contacts -->
-    <div v-if="showContact === 'all'">
+    <div v-if="showContact === 'all' && !contactStore.loading">
       <p claass="mb-4"> you have {{ contactStore.totalCount }} saved contacts</p>
-      <ContactList :contacts="contactStore.contacts" />
+      <!-- search contacts -->
+      <div v-if="contactStore.searching">
+        <ContactList :searchContacts="contactStore.searchFilter" />
+      </div>
+      <!-- contacts -->
+      <div v-else>
+        <ContactList :contacts="contactStore.contacts" />
+      </div>
     </div>
     <!-- favorite contacts -->
     <div v-if="showContact === 'fav'">
       <p class="mb-4">you have {{ contactStore.favCount }} favourite contacts</p>
       <ContactList :contacts="contactStore.favs" />
     </div>
+
 
 
   </div>
